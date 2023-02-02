@@ -1,0 +1,72 @@
+.container {
+    width: 100%;
+    margin-top: 8vw;
+    color: white;
+    text-align: center;
+}
+
+.btn-purple {
+    color: white;
+    background:#461E71;
+    margin-right: .5rem;
+    /* background:#2F0D53; */
+}
+
+.btn-purple:hover {
+    background:#2F0D53;
+
+}
+
+ul#goals {
+    width: 80%;
+    margin: 5% auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+ul#goals li.goal {
+    width: 100%;
+    height: 5rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #90918E;
+    transition: all .2s;
+    border-radius: 10px;
+    padding: 0 1rem;
+    color: white;
+    box-shadow: 0 3px 5px #616161;
+    text-transform:capitalize;
+}
+
+ul#goals li.goal:hover {
+    background:#616161;
+
+}
+
+ul#goals li.goal small {
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Anybody', cursive;
+    font-weight: 300;
+    text-shadow: 1px 1px 1px black;
+    margin-right: .5rem;
+}
+
+ul#goals li.goal button {
+    margin:0 .5rem;
+}
+
+ul#goals li.goal.done {
+    background:#325D31;
+    box-shadow: 0 3px 5px #1D471C;
+}
+
+ul#goals li.goal.done:hover {
+    background:#1D471C;
+}

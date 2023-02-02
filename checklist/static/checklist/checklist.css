@@ -1,0 +1,144 @@
+section {
+    color: white;
+}
+
+#button-toggle {
+    margin-top: 120px;
+    /* margin-top: 8vw; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+form h3 {
+    font-family: 'Anybody', cursive;
+    font-weight: 300;
+}
+
+
+section#lembretes, section#checklist {
+    margin: 2vw auto;
+    width: 90%;
+    text-align: center;
+}
+
+#lembretes-grid .r {
+    margin-bottom: 2rem;
+
+}
+
+
+#lembretes-grid i {
+    color: #C6B12B;
+    text-shadow: 0px 0px 3px black;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+#lembretes-grid section.r-wrap {
+    position: relative;
+    background: #90918E;
+    border-radius: 10px;
+    height: 100px;
+    padding: .8rem;
+    transition: all .2s ease-in-out;
+    
+}
+
+.btn-purple {
+    color: white;
+    background:#461E71;
+    /* background:#2F0D53; */
+}
+
+.btn-purple:hover {
+    background:#2F0D53;
+
+}
+#lembretes-grid section.r-wrap:hover {
+    background: #616161
+}
+
+#lembretes-form, section#checklist form {
+    width: 60%;
+    margin: 1rem auto;
+
+}
+
+@media (max-width:800px) {
+    #lembretes-form, section#checklist form {
+        width:85%;
+    }
+
+    ul#tasks-wrap {
+        width: 100%;
+    }
+
+    section#checklist {
+        width:100%;
+    }
+}
+
+ul#tasks-wrap {
+    padding: 0;
+    width: 70%;
+    margin: 2rem auto;
+}
+
+li.task form {
+    position: absolute;
+    width: 70vw;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+li.task button.toggle {
+    position: absolute;
+    top: 8px;
+    left: 5px;
+}
+
+li.task {
+    padding: 1rem 0; 
+    list-style: none;
+    margin: .5rem auto;
+    position: relative;
+    background: #90918E;
+    border-radius: 10px;
+    box-shadow: 0 3px 5px #616161;
+    transition: all .2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+li.task:hover {
+    background:#616161;
+}
+
+li.task button {
+    margin-right: 5px;
+}
+
+li.task.done {
+    background:#325D31;
+    box-shadow: 0 3px 5px #1D471C;
+
+}
+
+li.task.done:hover {
+    background:#1D471C;
+}
+
+div#btn-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 1rem;
+}

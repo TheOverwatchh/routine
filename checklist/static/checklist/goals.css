@@ -1,0 +1,168 @@
+#all-wrapper {
+    width: 100%;
+    margin-top: 8rem;
+    text-align: center;
+}
+
+#all-wrapper h3 {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-family: 'Anybody', cursive;
+    font-weight: 300;
+}
+
+.btn-purple {
+    color: white;
+    transform: translateY(-.2rem);
+    /* width: 3rem;
+    height: 2.2rem; */
+    background:#461E71;
+    /* background:#2F0D53; */
+}
+
+.btn-purple:hover {
+    background:#2F0D53;
+
+}
+
+#all-wrapper-form {
+    width: 100%;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+#all-wrapper-form h3 {
+    font-family: 'Anybody', cursive;
+    font-weight: 300;
+}
+
+#all-wrapper-form form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+#all-wrapper-form form input[type='date'][name='deadline']#deadline {
+    position: relative;
+}
+
+
+#all-wrapper-form form label[for='deadline'] {
+    position: absolute;
+    z-index: 3;
+    color: rgb(103, 97, 97);
+    left: 48%;
+    top: 47%;
+}
+
+
+@media (max-width: 800px) {
+    #all-wrapper-form form {
+        width: 85%;
+    }
+
+}
+
+ul#goals {
+    width: 80%;
+    margin: 5% auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+ul#goals li.goal {
+    width: 100%;
+    height: 5rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #90918E;
+    transition: all .2s;
+    border-radius: 10px;
+    padding: 0 1rem;
+    color: white;
+    box-shadow: 0 3px 5px #616161;
+    text-transform:capitalize;
+}
+
+ul#goals li.goal:hover {
+    background:#616161;
+
+}
+
+ul#goals li.goal small {
+    color: #B8452D;
+    font-size: 15px;
+    font-family: 'Anybody', cursive;
+    font-weight: 300;
+    text-shadow: 1px 1px 1px #470F03;
+    margin-right: .5rem;
+}
+
+ul#goals li.goal button {
+    margin:0 .5rem;
+}
+
+ul#goals li.goal #progress-bar {
+    width: 40%;
+    height: 20px;
+    border-radius: 10px;
+    background: #525252;
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+}
+
+ul#goals li.goal.done #progress-bar .x {
+    height: 20px;
+    width: 100% !important;
+    border-radius: 10px;
+    background: #004001;
+    /* background: white; */
+}
+
+ul#goals li.goal.done:hover #progress-bar .x {
+    background:#325D31;
+}
+
+ul#goals li.goal #progress-bar .x {
+    transition: all 0.2s;
+    height: 20px;
+    border-radius: 10px;
+    background: white;
+}
+
+ul#goals li.goal.done {
+    background:#325D31;
+    box-shadow: 0 3px 5px #1D471C;
+}
+
+ul#goals li.goal.done:hover {
+    background:#1D471C;
+}
+
+
+@media (max-width:800px) {
+    ul#goals {
+        width: 95%;
+    }
+
+    ul#goals li.goal #progress-bar {
+        display: none;
+    }
+} 

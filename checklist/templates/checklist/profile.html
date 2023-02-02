@@ -1,0 +1,34 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/profile.css">
+{% endblock %}
+
+{% block nav %}
+<span id="1" class=" nav" onclick="window.location.href='/checklist'"><i class="fa-solid fa-list-check"></i></span> 
+
+<span id="2" onclick="window.location.href='/goals'" class="nav"><i class="fa-solid fa-bars-progress"></i></span>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h3><button onclick="window.location.href='/checklist'" class="btn btn-purple"><i class="fas fa-backward"></i></button>{{user.username}}</h3>
+    <ul id="goals">
+    <h5>{{ completedGoals|length }} meta(s) completa(s)</h5>
+           {% for g in completedGoals %}            
+            <li id="g-{{g.id}}" class="goal done">
+                <span><a href="/goals/{{g.id}}" class="btn btn-purple" id="{{ g.id }}"><i id="{{ g.id }}" class="fa-regular fa-eye"></i></a>{{ g.title }}</span>
+                <span style="font-size: 13px;" class="d-none d-md-block">{{ g.description }}</span>
+                <span class="d-flex align-items-center justify-content-center"><div><small>Cumprida:</small>{{g.deadline}}</div></span>
+            </li>   
+           {% endfor %}
+        </ul>
+<a href="/logout" class="btn btn-danger form-control">Log out</a>
+        
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

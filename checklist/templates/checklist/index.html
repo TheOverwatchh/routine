@@ -1,0 +1,43 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/index.css">
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+<!-- Logo + slogan -->
+<h1> <i class="fa-solid fa-rocket"></i> Routine</h1>
+<h6>Com organização, nenhuma meta é utópica.</h6>
+
+
+<!-- login/register (button to toggle) -->
+<form id="login" action="{% url 'login' %}" method="POST" class="text-center">
+    {% csrf_token %}
+    <h5>Login</h5>
+    {% if message %}
+    <p style="color: red;">{{ message }}</p>
+    {% endif %}
+    <input class="form-control mb-2" type="text" name="username" placeholder="username">
+    <input class="form-control mb-2" type="password" name="password" placeholder="password">
+    <button type="submit" class="btn btn-secondary form-control mb-2">Login</button>
+    <div> se não houver conta ainda, <a id="register" class="btn btn-outline-light btn-sm">registre-se</a></div>
+</form>
+<form action="{% url 'register' %}" method="POST" id="register" class="text-center">
+    {% csrf_token %}
+    <h5>Register</h5>
+    <input class="form-control mb-2" type="text" name="username" placeholder="username">
+    <input class="form-control mb-2" type="text" name="email" placeholder="email">
+    <input class="form-control mb-2" type="text" name="password" placeholder="password">
+    <button class="btn btn-secondary form-control mb-2">Registrar</button>
+    <div> se já houver uma conta, <a id="login" class="btn btn-outline-light btn-sm">logue-se</a></div>
+</form>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="../../static/checklist/index.js"></script>
+{% endblock %}

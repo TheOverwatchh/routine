@@ -1,0 +1,138 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/checklist.css">
+{% endblock %}
+
+{% block nav %}
+<span id="1" class=" nav active" onclick="window.location.href='/checklist'"><i class="fa-solid fa-list-check"></i></span> 
+
+<span id="2" onclick="window.location.href='/goals'" class="nav"><i class="fa-solid fa-bars-progress"></i></span>
+{% endblock %}
+
+
+
+{% block body %}
+<div id="button-toggle" class="d-flex align-items-center justify-content-center">
+    <button class="btn btn-secondary" id="lembretes">Lembretes</button>
+    <button class="btn btn-secondary" id="checklist">Checklist</button>
+</div>
+<input type="hidden" id="status" value="{{status}}">
+<section id="lembretes">
+    <section id="lembretes-form">
+        <form action="{% url 'createReminder' %}" method="POST">{% csrf_token %}
+            <h3>Novo lembrete</h3>
+            <input class="form-control" type="text" name="title" maxlength="17" placeholder="Título do lembrete" required>
+            <textarea class="form-control mt-1" name="content" id="" rows="3" placeholder="Conteúdo do lembrete"></textarea>
+            <button type="submit" class="btn btn-secondary form-control mt-1">Adicionar</button>
+        </form>
+    </section>
+    {% if llen == 0 %}
+        <h3>Nenhum lembrete catalogado ainda</h3>
+    {% endif %}
+    <div class="row" id="lembretes-grid">
+    {% for l in lembretes %}
+        <div class="r col-md-3 col-sm-4 col-6">
+            <input type="hidden" id="hiddenid" value="{{ l.id }}">
+            <section id="r-{{ l.id }}" class="r-wrap">
+            <i id="{{ l.id }}" class="fas fa-thumbtack"></i>
+
+                <p id="{{ l.id }}">{{ l.title }}</p>
+               <div class="d-flex align-items-center justify-content-center gap-3">
+                <a  href="/reminder/{{ l.id }}" id="DONOTHING" class="btn btn-purple">Ver</a >
+                <button id="{{ l.id }}" class="btn btn-success" onclick="complete(event)">Completar</button>    
+               </div>
+            <section>
+        </div>
+    
+    {% endfor %}
+    </div>
+
+</section>
+<section id="checklist" style="display: none;">
+    <form id="n-t" action="{% url 'createTask' %}" method="POST">{% csrf_token %}
+        <h3>Nova task</h3>
+        <input class="form-control" type="text" name="title" maxlength="30" placeholder="Título da task" required>
+        <input class="form-control mt-1" type="time" name="time" placeholder="horário" required>
+        
+        <button type="submit" class="btn btn-secondary form-control mt-1">Adicionar</button>
+    </form>
+   
+    <ul id="tasks-wrap">
+        <div id="btn-wrap">
+            <button class="btn btn-purple" onclick="refresh()">Resetar</button>
+
+        </div>
+     <div id="t-w">   
+    {% if tlen == 0 %}
+        <h3>Nenhuma tarefa catalogada ainda</h3>
+    {% endif %}
+    {% for t in tasks %}
+    {% if t.status == 'undone' %}
+    <li id="l-{{ t.id }}" class="task">
+        <button class="toggle btn btn-outline-success" id="{{ t.id }}" onclick="toggleTask(event)"><i id="{{ t.id }}" class="fa-solid fa-check"></i></button>
+        <span>{% if t.time != None %}{{t.time}} |{% endif %} {{ t.title }}</span>
+        <form action="{% url 'deleteTask' %}" method="POST"> {% csrf_token %}
+            <input type="hidden" name="id" value="{{t.id}}">
+            <button class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+        </form>
+    </li>
+    {% else %}
+    <li id="l-{{ t.id }}" class="task done" value="{{ t.id }}">
+        <button id="{{ t.id }}" class="toggle btn btn-outline-success" onclick="toggleTask(event)"><i id="{{ t.id }}" class="fa-solid fa-check"></i></button>
+        <span>{% if t.time != None %}{{t.time}} |{% endif %} {{ t.title }}</span>
+        <form action="{% url 'deleteTask' %}" method="POST"> {% csrf_token %}
+            <input type="hidden" name="id" value="{{t.id}}">
+            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+        </form>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+</div>
+    </ul>
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+    function complete(e) {
+        const r = document.querySelector(`section#r-${e.target.id}.r-wrap`)
+        fetch(`deleteReminder/${e.target.id}`)
+        .then(() => {
+           r.style.backgroundColor = '#1B6611'; 
+           setTimeout(() => {
+            r.style.opacity = 0;
+        },150)
+           
+        })
+    }
+    function toggleTask(event) {
+        fetch(`/toggleTask/${event.target.id}`)
+        .then(() => {
+            document.querySelector(`li#l-${event.target.id}`).classList.toggle('done');
+        })
+    }
+
+    if (document.querySelector('input#status').value == 'checklist') {
+        document.querySelector('section#lembretes').style.display = 'none';
+        document.querySelector('section#checklist').style.display = 'block';
+    }
+
+    function refresh() {
+       const lis = document.querySelectorAll('li.done');
+       for (let i = 0; i < lis.length; i++) {
+        fetch(`/toggleTask/${lis[i].value}`)
+        .then(() => {
+            document.querySelector(`li#l-${lis[i].value}`).classList.toggle('done');
+        })
+       }
+    }
+
+    function personal() {
+        document.querySelector('div#t-w').style.display = 'none';
+        document.querySelector('form#n-t').style.display = 'none';
+    }
+</script>
+<script src="../../static/checklist/checklist.js" ></script>
+{% endblock %}

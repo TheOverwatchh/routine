@@ -1,0 +1,31 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/goals.css">
+{% endblock %}
+
+{% block nav %}
+<span id="1" class="nav" onclick="window.location.href='/checklist'"><i class="fa-solid fa-list-check"></i></span> 
+
+<span id="2" onclick="window.location.href='/goals'" class="nav"><i class="fa-solid fa-bars-progress"></i></span>
+{% endblock %}
+
+
+{% block body %}
+<div id="all-wrapper-form">
+    <h3> <button onclick="window.location.href='/goals'" class="btn btn-purple"><i class="fas fa-backward"></i></button> Nova meta</h3>
+    <form action="{% url 'newGoal' %}" method="POST"> {% csrf_token %}
+        <input class="form-control" type="text" name="title" maxlength="20" placeholder="Título da meta">
+        <input placeholder="prazo" class="form-control" name='deadline' type="text" onfocus="(this.type='date')" id="date">
+
+        <!-- <input id="deadline" class="form-control" type="date" name="deadline" placeholder="prazo da meta"> -->
+        <!-- <label for="deadline">Prazo</label> -->
+        <textarea class="form-control" name="description" id="" maxlength="299" rows="3" placeholder="Descrição" style="resize:none;"></textarea>
+        <button class="btn btn-secondary">Adicionar</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

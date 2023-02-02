@@ -1,0 +1,73 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/goal.css">
+{% endblock %}
+
+{% block nav %}
+<span id="1" class="nav" onclick="window.location.href='/checklist'"><i class="fa-solid fa-list-check"></i></span> 
+
+<span id="2" onclick="window.location.href='/goals'" class="nav"><i class="fa-solid fa-bars-progress"></i></span>
+{% endblock %}
+
+
+{% block body %}
+<div id="all-wrapper-form">
+   <div id="mainTop"><h3><div onclick="window.location.href='/goals'" class="btn btn-purple" style="margin-right: 1rem;"><i class="fa-solid fa-backward"></i></div>{{ goal.title }}</h3><small>{{ goal.description }}</small></div>
+   {% if goal.status ==  'undone'%}
+   <form action="{% url 'addMiniGoal' %}" id="addMiniGoal" method='POST'>{% csrf_token %}
+    <h3>Adicionar mini meta</h3>
+    <input type="hidden" name='goal' value='{{goal.id}}'>
+    <input type="text" name='title' class='form-control' placeholder='título da minimeta'>
+    <textarea class='form-control' name="description" id="" maxlength='80' rows="1" placeholder='descrição'></textarea>
+    <input placeholder="prazo" class="form-control" name='deadline' type="text" onfocus="(this.type='date')" id="date">
+    <!-- <input class='form-control' type="date" name='deadline'> -->
+    <button class="btn btn-secondary form-control">Adicionar</button>
+</form>
+    <ul id="goals">
+    <h3 id="percentage">{{ goal.percentage }}</h3>
+       {% for g in minigoals %}
+        {% if g.status == 'undone' %}
+        <li id="g-{{g.id}}" class="goal">
+            <span><a onclick='toggleMiniGoal(event)' class="btn btn-outline-success" id="{{ g.id }}"><i id="{{ g.id }}" class="fa-solid fa-check"></i></a> {{ g.title }}</span>
+            <span style="font-size: 13px;" class="d-none d-md-block">{{ g.description }}</span>
+            <div id='minigoalform'>
+            <span class="d-flex align-items-center justify-content-center"><div><small>Prazo:</small>{{g.deadline}}</div></span>
+            <form action="{% url 'deleteMiniGoal' unique=g.id %}">{% csrf_token %}<button class='btn btn-outline-danger'><i class='fa-solid fa-trash' ></i></button></form>  
+            </div>
+            </li>
+        {% else %}    
+        <li id="g-{{g.id}}" class="goal done">
+            <span><a onclick='toggleMiniGoal(event)' class="btn btn-outline-success" id="{{ g.id }}"><i id="{{ g.id }}" class="fa-solid fa-check"></i></a> {{ g.title }}</span>
+            <span style="font-size: 13px;" class="d-none d-md-block">{{ g.description }}</span>
+            <span class="d-flex align-items-center justify-content-center"><div><small>Prazo:</small>{{g.deadline}}</div></span>
+            </li>
+        {% endif %}    
+       {% endfor %}
+    </ul>
+    <form id='footer' action="{% url 'completeGoal' unique=goal.id %}">{% csrf_token %}
+        <button class='btn btn-success form-control'>Complete goal</button>
+    </form>
+    <form id='footer' action="{% url 'deleteGoal' unique=goal.id %}">{% csrf_token %}
+        <button class='btn btn-danger form-control'>Delete goal</button>
+    </form>
+    {% else %}
+    <div id="done">
+        <h3>{{ goal.status }}</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+      function toggleMiniGoal(event) {
+        //   window.location.href = `toggleMiniGoal/${event.target.id}`
+        fetch(`toggleMiniGoal/${event.target.id}`)
+        .then(() => {
+            document.querySelector(`li#g-${event.target.id}`).classList.toggle('done');
+            document.location.reload(true);
+        })
+    }
+</script>
+{% endblock %}

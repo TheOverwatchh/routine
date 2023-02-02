@@ -1,0 +1,24 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/lembrete.css">
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <h1>{{ lembrete.title }}</h1>
+   {% if lembrete.content %}
+   <p>{{ lembrete.content }}</p>
+   {% else %}
+   <p>Sem mais detalhes.</p>
+   {% endif %}
+<a href="/" class="btn btn-secondary">Retornar</a>
+        
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

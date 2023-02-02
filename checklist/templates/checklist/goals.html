@@ -1,0 +1,48 @@
+{% extends 'checklist/layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/checklist/goals.css">
+{% endblock %}
+
+{% block nav %}
+<span id="1" class="nav" onclick="window.location.href='/checklist'"><i class="fa-solid fa-list-check"></i></span> 
+
+<span id="2" onclick="window.location.href='/goals'" class="nav active"><i class="fa-solid fa-bars-progress"></i></span>
+{% endblock %}
+
+
+{% block body %}
+<div id="all-wrapper">
+   <h3>Metas <button onclick="window.location.href='/goals/newGoal'" class="btn btn-purple"><i class="fas fa-plus"></i></button></h3>
+   <ul id="goals">
+    {% if glen == 0 %}
+    <h3 style="margin-top: 18%;">Nenhuma meta catalogada... <button class="btn btn-purple" onclick="window.location.href = '/goals/newGoal'">Ainda</button></h3>
+    {% endif %}
+   {% for g in goals %}
+   {% if g.status == 'undone' %}
+   <li id="g-{{g.id}}" class="goal">
+    <span><a href="/goals/{{g.id}}" class="btn btn-purple" id="{{ g.id }}"><i id="{{ g.id }}" class="fa-regular fa-eye"></i></a> {{ g.title }}</span>
+    <span id="progress-bar" name="percentage" value="percentage"><span class="x">{{g.percentage}}</span></span>
+    <span class="d-flex align-items-center justify-content-center"><div><small>Prazo:</small>{{g.deadline}}</div></span>
+</li>
+   {% elif g.status == 'done' %}
+   <!-- <li id="g-{{g.id}}" class="goal done">
+    <span><a href="/goals/{{g.id}}" class="btn btn-purple" id="{{ g.id }}"><i id="{{ g.id }}" class="fa-regular fa-eye"></i></a> {{ g.title }}</span>
+    <span id="progress-bar" name="percentage" value="percentage"><span class="x">{{g.percentage}}</span></span>
+    <span class="d-flex align-items-center justify-content-center"><div><small>Prazo:</small>{{g.deadline}}</div></span>
+</li> -->
+   {% endif %} 
+   {% endfor %}
+   </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    if (document.querySelector('span.x').innerHTML == '0%') {
+        document.querySelector('span.x').style.display = 'none';
+    } else {  
+    document.querySelector('span.x').style.width = document.querySelector('span.x').innerHTML;
+    }
+</script>
+{% endblock %}
